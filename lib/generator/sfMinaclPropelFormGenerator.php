@@ -88,16 +88,41 @@ class sfMinaclPropelFormGenerator extends sfPropelFormGenerator
 			}
 			$packages[$pos] = $this->params['form_dir_name'];
 			$baseDir = sfConfig::get('sf_root_dir').'/'.implode(DIRECTORY_SEPARATOR, $packages).'/minacl';
-			
+			/*
+			 * create the base directory for the form classes if it doesn't exist
+			 * already
+			 */
 			if (!is_dir($baseDir.'/base'))
 			{
 				mkdir($baseDir.'/base', 0777, true);
 			}
-
-			file_put_contents($baseDir.'/base/Base'.$table->getClassname().'Form.class.php', $this->evalTemplate('sfPropelFormGeneratedTemplate.php'));
+			/*
+			 * create the directory for the form templates if it doesn't exist
+			 * already
+			 */
+			if (!is_dir($baseDir.'/view'))
+			{
+				mkdir($baseDir.'/view', 0777, true);
+			}
+			/*
+			 * write the Minacl form class ( Base[Model]Form.class.php ) 
+			 */
+			file_put_contents($baseDir.'/base/Base'.$table->getClassname().'Form.class.php', $this->evalTemplate('sfMinaclPropelFormGeneratedTemplate.php'));
+			/*
+			 * if none has been created already, write the extending class
+			 * ( [Model]Form.class.php )
+			 */
 			if (!file_exists($classFile = $baseDir.'/'.$table->getClassname().'Form.class.php'))
 			{
 				//file_put_contents($classFile, $this->evalTemplate('sfPropelFormTemplate.php'));
+			}
+			/*
+			 * write the form template
+			 */
+			$formTemplate = $baseDir.'/view/'.strtolower($table->getClassname()).'.php';
+			if (!file_exists($formTemplate))
+			{
+				file_put_contents($formTemplate, $this->evalTemplate('sfMinaclPropelFormViewTemplate.php'));
 			}
 		}
 	}
@@ -108,7 +133,7 @@ class sfMinaclPropelFormGenerator extends sfPropelFormGenerator
 	 * @param ColumnMap $column
 	 * @return array with up to 3 elements with the keys "typeValidator", "typeValidatorChain" (optional) & "requiredValidator" (optional)
 	 */
-	public function getValidatorClassAndChain(ColumnMap $column)
+	public function getValidatorClassesAndChains(ColumnMap $column)
 	{
 		$name = null;
 		$optionChain = '';
@@ -213,6 +238,68 @@ class sfMinaclPropelFormGenerator extends sfPropelFormGenerator
 			}
 		}
 
-		$validators;
+		return $validators;
+	}
+	
+	/**
+	 * Gets a friendly label name from a column
+	 * @param ColumnMap $column
+	 * @return string
+	 */
+	public function label(ColumnMap $column)
+	{
+		$name = $this->underscore($this->translateColumnName($column));
+		$name = str_replace('_', ' ', $name);
+		return ucfirst($name);
+	}
+	
+	/**
+	 * If the column needs to be a subform (useful for more complex things like lists and
+	 * dates) this will return true
+	 * 
+	 * @param ColumnMap $column
+	 * @return boolean
+	 */
+	public function isSubForm(ColumnMap $column)
+	{
+		/*
+		 * either the column must be one of these types
+		 * or a foreign key to be a sub form
+		 */
+		switch($column->getType())
+		{
+			case PropelColumnTypes::DATE:
+			case PropelColumnTypes::TIME:
+			case PropelColumnTypes::TIMESTAMP:
+				return true;
+		}
+		
+		return $column->isForeignKey();
+	}
+	
+	/**
+	 * subforms have different id's and may have more than one field, we can use dot names
+	 * to refer to them from a parent form in Minacl
+	 */
+	public function getLabelId(ColumnMap $column)
+	{
+		$name = $this->translateColumnName($column);
+		switch($column->getType())
+		{
+			case PropelColumnTypes::DATE:
+			case PropelColumnTypes::TIMESTAMP:
+				$name .= '.date';
+				break;
+			case PropelColumnTypes::TIME:
+				$name .= '.time';
+				break;
+		}
+		
+		if($column->isForeignKey())
+		{
+			$name .= '.list';
+		}
+		
+		return $name;
 	}
 }

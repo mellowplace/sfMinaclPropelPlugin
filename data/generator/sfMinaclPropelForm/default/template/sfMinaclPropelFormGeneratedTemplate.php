@@ -16,8 +16,11 @@ abstract class Base<?php echo $this->table->getClassname() ?>Form extends BaseFo
 <?php 
 foreach ($this->table->getColumns() as $column): 
 	$validators = $this->getValidatorClassesAndChains($column);
-	
-	
+?>
+		/*
+		 * Validators for the <?php echo $column->getName() ?> column
+		 */
+<?php 
 	foreach($validators as $num => $val):
 		$valName = '$' . $this->translateColumnName($column) . ($num + 1);
 ?>
@@ -28,7 +31,7 @@ foreach ($this->table->getColumns() as $column):
 		 */ 
 		if(isset($val['chain'])): 
 ?>
-		<?php echo $valName . $validator['chain'] ?>;
+		<?php echo $valName . $val['chain'] ?>;
 <?php
 		endif;
 	endforeach;
@@ -38,16 +41,16 @@ foreach ($this->table->getColumns() as $column):
 	 */
 	if(sizeof($validators) > 1):
 ?>
-		$this-><?php echo $this->translateColumnName($column) ?>->setValidator(
-			new phValidatorLogic(<?php echo $valName ?>)
-		)->
+		$this-><?php echo $this->translateColumnName($column) ?>->setValidator(new phValidatorLogic(<?php echo '$' . $this->translateColumnName($column) . '1' ?>))->
 <?php 
-		foreach($validators as $num => $val):
-			$valName = '$' . $this->translateColumnName($column) . ($num + 1);
+		for($x=1; $x<sizeof($validators); $x++):
+			$val = $validators[$x];
+			$valName = '$' . $this->translateColumnName($column) . ($x +1);
 ?>
-		and_(<?php echo $valName ?>)<?php $num < sizeof($validators) ? '->' : ';' ?>
+			and_(<?php echo $valName ?>)<?php echo ($x+1) < sizeof($validators) ? '->' : ';' ?>
+		
 <?php 
-		endforeach;
+		endfor;
 	else:
 		$valName = '$' . $this->translateColumnName($column) . '1';
 ?>
@@ -66,12 +69,12 @@ foreach ($this->getManyToManyTables() as $tables):
 <?php 
 endforeach;
 ?>
-  }
+	}
 
-  public function getModelName()
-  {
-    return '<?php echo $this->table->getClassname() ?>';
-  }
+	public function getModelName()
+	{
+		return '<?php echo $this->table->getClassname() ?>';
+	}
 
 <?php if ($this->isI18n()): ?>
   public function getI18nModelName()
