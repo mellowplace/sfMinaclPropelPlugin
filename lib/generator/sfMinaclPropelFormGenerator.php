@@ -105,6 +105,14 @@ class sfMinaclPropelFormGenerator extends sfPropelFormGenerator
 				mkdir($baseDir.'/view', 0777, true);
 			}
 			/*
+			 * write the BaseFormMinaclPropel class if it doesn't exist
+			 */
+			$baseForm = $baseDir . '/BaseFormMinaclPropel.class.php';
+			if (!file_exists($baseForm))
+			{
+				file_put_contents($baseForm, $this->evalTemplate('sfMinaclPropelFormBase.php'));
+			}
+			/*
 			 * write the Minacl form class ( Base[Model]Form.class.php ) 
 			 */
 			file_put_contents($baseDir.'/base/Base'.$table->getClassname().'Form.class.php', $this->evalTemplate('sfMinaclPropelFormGeneratedTemplate.php'));
@@ -114,7 +122,7 @@ class sfMinaclPropelFormGenerator extends sfPropelFormGenerator
 			 */
 			if (!file_exists($classFile = $baseDir.'/'.$table->getClassname().'Form.class.php'))
 			{
-				//file_put_contents($classFile, $this->evalTemplate('sfPropelFormTemplate.php'));
+				file_put_contents($classFile, $this->evalTemplate('sfMinaclPropelFormTemplate.php'));
 			}
 			/*
 			 * write the form template

@@ -3,7 +3,6 @@
  * <?php echo $this->table->getClassname() ?> form template
  */
 ?]
-<dl>
 <?php
 $primaryKeyColumn = null;
 
@@ -20,6 +19,9 @@ foreach ($this->table->getColumns() as $column):
 	}
 	
 	$name = $this->translateColumnName($column);
+?>
+<tr>
+<?php 
 	/*
 	 * for dates and times the element will be a subform
 	 * also for foreign key relations (it draws a list)
@@ -30,13 +32,13 @@ foreach ($this->table->getColumns() as $column):
 		 */
 		$labelName = $this->getLabelId($column);
 ?>
-	<dt><label for="[?php echo $this->id('<?php echo $labelName ?>') ?]"><?php echo $this->label($column) ?></label></dt>
-	<dd>[?php echo $this->form('<?php echo $name ?>') ?]</dd>
+	<th><label for="[?php echo $this->id('<?php echo $labelName ?>') ?]"><?php echo $this->label($column) ?></label></th>
+	<td>[?php echo $this->form('<?php echo $name ?>') ?]</td>
 <?php 
 	else:
 ?>
-	<dt><label for="[?php echo $this->id('<?php echo $name ?>') ?]"><?php echo $this->label($column) ?></label></dt>
-	<dd>
+	<th><label for="[?php echo $this->id('<?php echo $name ?>') ?]"><?php echo $this->label($column) ?></label></th>
+	<td>
 <?php 
 		switch($column->getType()):
 			case PropelColumnTypes::BOOLEAN:
@@ -67,9 +69,12 @@ foreach ($this->table->getColumns() as $column):
 <?php
 		endswitch;
 ?>
-	</dd>
+	</td>
 <?php 
 	endif;
+?>
+</tr>
+<?php 
 endforeach; // columns
 /*
  * Many 2 many relationships (multi choice subforms)
@@ -78,19 +83,24 @@ $tables = $this->getManyToManyTables();
 foreach($tables as $table):
 	$name = $this->underscore($table['middleTable']->getClassname()) . 'List';
 ?>
-	<dt><label for="[?php echo $this->id('<?php echo $name ?>.list') ?]"><?php echo $this->label($table['relatedColumn']) ?>s</label></dt>
-	<dd>[?php echo $this->form('<?php echo $name ?>') ?]</dd>
+<tr>
+	<th><label for="[?php echo $this->id('<?php echo $name ?>.list') ?]"><?php echo $this->label($table['relatedColumn']) ?>s</label></th>
+	<td>[?php echo $this->form('<?php echo $name ?>') ?]</td>
+</tr>
 <?php 
 endforeach; // many 2 many tables
 ?>
-</dl>
 <?php 
 if($primaryKeyColumn): 
 	$name = $this->translateColumnName($primaryKeyColumn);
 ?>
-<input 	type="hidden" 
-		id="[?php echo $this->id('<?php echo $name ?>') ?]"
-		name="[?php echo $this->name('<?php echo $name ?>') ?]" />
+<tr style="display: none;">
+	<td colspan="2">
+		<input 	type="hidden" 
+			id="[?php echo $this->id('<?php echo $name ?>') ?]"
+			name="[?php echo $this->name('<?php echo $name ?>') ?]" />
+	</td>
+</tr>
 <?php
 endif;
 ?>

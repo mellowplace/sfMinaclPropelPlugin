@@ -26,6 +26,7 @@
  *
  * @author Rob Graham <htmlforms@mellowplace.com>
  * @package sfMinaclPropelPlugin
+ * @subpackage lib.task
  */
 class sfMinaclBuildFormsTask extends sfPropelBuildFormsTask
 {
