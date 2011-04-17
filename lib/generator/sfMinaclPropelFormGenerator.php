@@ -170,19 +170,19 @@ class sfMinaclPropelFormGenerator extends sfPropelFormGenerator
 				break;
 			case PropelColumnTypes::TINYINT:
 				$name = 'Numeric';
-				$optionChain = "->min(-128)->max(127)";
+				$optionChain = "->decimal(false)->min(-128)->max(127)";
 				break;
 			case PropelColumnTypes::SMALLINT:
 				$name = 'Numeric';
-				$optionChain = "->min(-32768)->max(32767)";
+				$optionChain = "->decimal(false)->min(-32768)->max(32767)";
 				break;
 			case PropelColumnTypes::INTEGER:
 				$name = 'Numeric';
-				$optionChain = "->min(-2147483648)->max(2147483647)";
+				$optionChain = "->decimal(false)->min(-2147483648)->max(2147483647)";
 				break;
 			case PropelColumnTypes::BIGINT:
 				$name = 'Numeric';
-				$optionChain = "->min(-9223372036854775808)->max(9223372036854775807)";
+				$optionChain = "->decimal(false)->min(-9223372036854775808)->max(9223372036854775807)";
 				break;
 			case PropelColumnTypes::DATE:
 				$name = 'Date';
@@ -226,7 +226,8 @@ class sfMinaclPropelFormGenerator extends sfPropelFormGenerator
 			$foreignTable = $this->getForeignTable($column);
 			$validators[] = array(
 				'class' => 'sfMinaclPropelChoiceValidator',
-				'chain' => "->setMultiple(false)->setModel('{$foreignTable->getClassname()}')"
+				'arguments' => "'{$foreignTable->getClassname()}'",
+				'chain' => "->setMultiple(false)"
 			);
 		}
 

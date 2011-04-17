@@ -10,6 +10,36 @@
  */
 abstract class Base<?php echo $this->table->getClassname() ?>Form extends BaseFormMinaclPropel
 {
+	public function preInitialize()
+	{
+		parent::preInitialize();
+<?php
+/*
+ * Find foreign keys and many2many tables.  We need to have subforms for these
+ * that are choosers.
+ */
+foreach ($this->table->getColumns() as $column):
+	if($column->isForeignKey()): 
+		$formName = $this->translateColumnName($column);
+		$foreignTable = $this->getForeignTable($column);
+		$modelClass = $foreignTable->getClassname();
+?>
+		$<?php echo $formName ?> = new sfMinaclPropelChooser('<?php echo $formName ?>', 'propelSingleSelect', '<?php echo $modelClass ?>');
+		$this->addForm($<?php echo $formName ?>);
+<?php
+	endif;
+endforeach;
+foreach ($this->getManyToManyTables() as $tables):
+	$dataName = $this->underscore($tables['middleTable']->getClassname()) . '_list';
+	$modelClass = $tables['relatedTable']->getClassname();
+?>
+		$<?php echo $dataName ?> = new sfMinaclPropelChooser('<?php echo $formName ?>', 'propelMultiSelect', '<?php echo $modelClass ?>');
+		$this->addForm($<?php echo $dataName ?>);
+<?php 
+endforeach;
+?>
+	}
+	
 	public function postInitialize()
 	{
 		parent::postInitialize();
@@ -24,7 +54,7 @@ foreach ($this->table->getColumns() as $column):
 	foreach($validators as $num => $val):
 		$valName = '$' . $this->translateColumnName($column) . ($num + 1);
 ?>
-		<?php echo $valName ?> = new <?php echo $val['class'] ?>();
+		<?php echo $valName ?> = new <?php echo $val['class'] ?>(<?php echo isset($val['arguments']) ? $val['arguments'] : '' ?>);
 <?php
 		/*
 		 * if the validator has an option chain, output it here
@@ -59,7 +89,7 @@ foreach ($this->table->getColumns() as $column):
 	endif;
 endforeach;
 foreach ($this->getManyToManyTables() as $tables):
-	$dataName = '$' . $this->underscore($tables['middleTable']->getClassname()) . 'List';
+	$dataName = '$' . $this->underscore($tables['middleTable']->getClassname()) . '_list';
 ?>
 		<?php echo $dataName ?>Validator = new sfMinaclPropelChoiceValidator();
 		<?php echo $dataName ?>Validator->
