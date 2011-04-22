@@ -6,7 +6,7 @@
  * @subpackage form
  * @author     ##AUTHOR_NAME##
  */
-abstract class BaseFormMinaclPropel extends sfFormMinacl
+abstract class BaseFormMinaclPropel extends sfFormMinaclPropel
 {
 
 }

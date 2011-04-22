@@ -22,15 +22,9 @@
  */
 
 /**
- * A single choice view for the sfMinaclPropelChooser widget
+ * Adds our widget views to the Minacl search paths
  *
  * @author Rob Graham <htmlforms@mellowplace.com>
  * @package sfMinaclPropelPlugin
- * @subpackage widget.view
  */
-?>
-<select id="<?php echo $this->id('list') ?>" name="<?php echo $this->name('list') ?>">
-<?php foreach($list as $l): ?>
-	<option value="<?php echo $this->_form->getPrimaryKeyValue($l) ?>"><?php echo htmlentities($l, ENT_COMPAT, 'utf-8') ?></option>
-<?php endforeach; ?>
-</select>
+phViewLoader::getInstance()->addDir(realpath(dirname(__FILE__) . '/../lib/widget/view'));

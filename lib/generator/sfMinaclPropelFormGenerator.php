@@ -257,9 +257,18 @@ class sfMinaclPropelFormGenerator extends sfPropelFormGenerator
 	 */
 	public function label(ColumnMap $column)
 	{
-		$name = $this->underscore($this->translateColumnName($column));
-		$name = str_replace('_', ' ', $name);
-		return ucfirst($name);
+		if($column->isForeignKey())
+		{
+			$table = $this->getForeignTable($column);
+			$name = $table->getPhpName();
+		}
+		else
+		{
+			$name = $this->underscore($this->translateColumnName($column));
+			$name = ucfirst(str_replace('_', ' ', $name));
+		}
+		
+		return $name;
 	}
 	
 	/**

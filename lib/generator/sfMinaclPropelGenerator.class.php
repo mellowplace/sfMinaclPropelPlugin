@@ -54,4 +54,15 @@ class sfMinaclPropelGenerator extends sfPropelGenerator
 		$formClass = $this->getTableMap()->getClassname();
 		return new $formClass($this->getFormTemplate());
 	}
+	
+	/**
+	 * Overridden to alter the first character to lower case
+	 * @see generator/sfModelGenerator::getSingularName()
+	 */
+	public function getSingularName()
+	{
+		$name = parent::getSingularName();
+		$name{0} = strtolower($name{0});
+		return $name;
+	}
 }

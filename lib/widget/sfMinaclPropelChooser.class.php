@@ -64,26 +64,22 @@ class sfMinaclPropelChooser extends phForm
 	}
 	
 	/**
+	 * Binds and selects the values of the list
+	 * @see minacl/lib/form/phForm::bind()
+	 */
+	public function bind($values)
+	{
+		// rather than bind the value to the form just bind it straight to the list
+		$this->list->bind($values);
+	}
+	
+	/**
 	 * Gets the value of the primary key field for a Propel model object
 	 * @param BaseObject $object
 	 * @return mixed
 	 */
 	public function getPrimaryKeyValue(BaseObject $object)
 	{
-		$class = new ReflectionClass($object);
-		$peerClass = $class->getConstant('PEER');
-		
-		$map = call_user_func(array($peerClass, 'getTableMap'));
-		foreach ($map->getColumns() as $column)
-		{
-			if ($column->isPrimaryKey())
-			{
-				$columnName = $column->getPhpName();
-				break;
-			}
-		}
-		$from = BasePeer::TYPE_PHPNAME;
-		
-		return call_user_func(array($peerClass, 'translateFieldName'), $columnName, $from, BasePeer::TYPE_COLNAME);
+		return $object->getPrimaryKey();
 	}
 }
