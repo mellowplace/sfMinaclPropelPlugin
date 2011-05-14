@@ -33,7 +33,10 @@ foreach ($this->table->getColumns() as $column):
 		$labelName = $this->getLabelId($column);
 ?>
 	<th><label for="[?php echo $this->id('<?php echo $labelName ?>') ?]"><?php echo $this->label($column) ?></label></th>
-	<td>[?php echo $this->form('<?php echo $name ?>') ?]</td>
+	<td>
+		[?php echo $this->form('<?php echo $name ?>') ?]
+		[?php echo $this->errorList('<?php echo $name ?>'); ?]
+	</td>
 <?php 
 	else:
 ?>
@@ -69,6 +72,7 @@ foreach ($this->table->getColumns() as $column):
 <?php
 		endswitch;
 ?>
+		[?php echo $this->errorList('<?php echo $name ?>'); ?]
 	</td>
 <?php 
 	endif;
@@ -99,6 +103,7 @@ if($primaryKeyColumn):
 		<input 	type="hidden" 
 			id="[?php echo $this->id('<?php echo $name ?>') ?]"
 			name="[?php echo $this->name('<?php echo $name ?>') ?]" />
+		[?php echo $this->errorList('<?php echo $name ?>'); ?]
 	</td>
 </tr>
 <?php

@@ -28,7 +28,7 @@
       </tr>
     </tfoot>
     <tbody>
-      [?php echo $form->getView()->render() ?]
+      [?php echo $form; ?]
     </tbody>
   </table>
 </form>

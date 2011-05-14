@@ -69,8 +69,16 @@ class sfMinaclPropelChooser extends phForm
 	 */
 	public function bind($values)
 	{
-		// rather than bind the value to the form just bind it straight to the list
-		$this->list->bind($values);
+		if(is_array($values) && array_key_exists('list', $values))
+		{
+			// this is from a form post so bind as normal
+			parent::bind($values);
+		}
+		else
+		{
+			// rather than bind the value to the form just bind it straight to the list
+			$this->list->bind($values);
+		}
 	}
 	
 	/**

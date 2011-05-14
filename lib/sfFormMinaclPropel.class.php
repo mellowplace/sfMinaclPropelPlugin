@@ -59,14 +59,33 @@ abstract class sfFormMinaclPropel extends sfFormMinacl
 		 */
 		foreach($defaults as $key=>$value)
 		{
-			try
-			{
-				$view->getData($key)->bind($value);
-			}
-			catch(phFormException $e)
-			{
-				// will be thrown if the user has removed the data item from the form
-			}
+			/*
+			 * the user may have removed some generated form elements, so before
+			 * binding check if it exists...
+			 */
+			if(!$view->hasData($key)) continue;
+			
+			$view->getData($key)->bind($value);
 		}
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see lib/sfFormMinacl::doUpdateObject()
+	 */
+	protected function doUpdateObject($values)
+	{
+		$this->getObject()->fromArray($values, BasePeer::TYPE_FIELDNAME);
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see lib/sfFormMinacl::saveObject()
+	 */
+	protected function saveObject()
+	{
+		$this->getObject()->save();
+		
+		return $this->getObject();
 	}
 }

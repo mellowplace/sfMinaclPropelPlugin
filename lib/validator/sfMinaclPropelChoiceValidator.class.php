@@ -55,7 +55,13 @@ class sfMinaclPropelChoiceValidator extends phValidatorCommon
 	 * @var string
 	 */
 	protected $_connection = null;
-
+	
+	/**
+	 * Arrays are ok in this validator
+	 * @var boolean
+	 */
+	protected $_allowArrays = true;
+	
 	/**
 	 * @param string $model The Propel model class we are checking valid choices on
 	 * @param array $errors
@@ -74,9 +80,9 @@ class sfMinaclPropelChoiceValidator extends phValidatorCommon
 
 	/**
 	 * (non-PHPdoc)
-	 * @see lib/form/validator/phValidator::validate()
+	 * @see lib/form/validator/phValidator::doValidate()
 	 */
-	public function validate($value, phValidatable $errors)
+	protected function doValidate($value, phValidatable $errors)
 	{
 		if($this->_multiple && !is_array($value))
 		{
@@ -97,6 +103,11 @@ class sfMinaclPropelChoiceValidator extends phValidatorCommon
 		if($count != $dbCount)
 		{
 			$errors->addError($this->getError(self::INVALID));
+			return false;
+		}
+		else
+		{
+			return true;
 		}
 	}
 
