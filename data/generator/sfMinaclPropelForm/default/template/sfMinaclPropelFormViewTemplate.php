@@ -8,11 +8,10 @@ $primaryKeyColumn = null;
 
 foreach ($this->table->getColumns() as $column):
 	/*
-	 * the pri key must be a hidden field, we'll output this
-	 * outside of the dl otherwise it'll cause the xhtml to
-	 * be invalid
+	 * if the pri key is an auto incrementing one it must be a hidden field we'll output 
+	 * this outside of the dl otherwise it'll cause the xhtml to be invalid
 	 */
-	if($column->isPrimaryKey())
+	if($column->isPrimaryKey() && $this->table->isUseIdGenerator())
 	{
 		$primaryKeyColumn = $column;
 		continue;
@@ -85,7 +84,7 @@ endforeach; // columns
  */
 $tables = $this->getManyToManyTables();
 foreach($tables as $table):
-	$name = $this->underscore($table['middleTable']->getClassname()) . 'List';
+	$name = $this->underscore($table['middleTable']->getClassname()) . '_list';
 ?>
 <tr>
 	<th><label for="[?php echo $this->id('<?php echo $name ?>.list') ?]"><?php echo $this->label($table['relatedColumn']) ?>s</label></th>

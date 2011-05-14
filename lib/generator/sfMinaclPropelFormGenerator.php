@@ -320,4 +320,14 @@ class sfMinaclPropelFormGenerator extends sfPropelFormGenerator
 		
 		return $name;
 	}
+	
+	/**
+	 * Gets a list name from a many2many table definition
+	 * @param array $tables
+	 * @return string
+	 */
+	public function getListName($tables)
+	{
+		return $this->underscore($tables['middleTable']->getClassname()) . '_list';
+	}
 }

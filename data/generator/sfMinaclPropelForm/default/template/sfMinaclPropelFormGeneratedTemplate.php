@@ -30,10 +30,10 @@ foreach ($this->table->getColumns() as $column):
 	endif;
 endforeach;
 foreach ($this->getManyToManyTables() as $tables):
-	$dataName = $this->underscore($tables['middleTable']->getClassname()) . '_list';
+	$dataName = $this->getListName($tables);
 	$modelClass = $tables['relatedTable']->getClassname();
 ?>
-		$<?php echo $dataName ?> = new sfMinaclPropelChooser('<?php echo $formName ?>', 'propelMultiSelect', '<?php echo $modelClass ?>');
+		$<?php echo $dataName ?> = new sfMinaclPropelChooser('<?php echo $dataName ?>', 'propelMultiSelect', '<?php echo $modelClass ?>');
 		$this->addForm($<?php echo $dataName ?>);
 <?php 
 endforeach;
@@ -89,13 +89,14 @@ foreach ($this->table->getColumns() as $column):
 	endif;
 endforeach;
 foreach ($this->getManyToManyTables() as $tables):
-	$dataName = '$' . $this->underscore($tables['middleTable']->getClassname()) . '_list';
+	$dataName = $this->underscore($tables['middleTable']->getClassname()) . '_list';
 ?>
-		<?php echo $dataName ?>Validator = new sfMinaclPropelChoiceValidator();
-		<?php echo $dataName ?>Validator->
-			setModel(<?php echo $tables['relatedTable']->getClassname() ?>)->
-			setMultiple(true);
-		<?php echo $dataName ?>->setValidator(<?php echo $dataName ?>Validator);
+		/*
+		 * Validators for the <?php echo $tables['middleTable']->getClassname() ?> many 2 many table
+		 */
+		$<?php echo $dataName ?> = new sfMinaclPropelChoiceValidator('<?php echo $tables['relatedTable']->getClassname() ?>');
+		$<?php echo $dataName ?>->setMultiple(true);
+		$this-><?php echo $dataName ?>->setValidator($<?php echo $dataName ?>);
 <?php 
 endforeach;
 ?>
@@ -123,8 +124,11 @@ endforeach;
   {
     parent::updateDefaultsFromObject();
 
-<?php foreach ($this->getManyToManyTables() as $tables): ?>
-    if (isset($this->widgetSchema['<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list']))
+<?php 
+	foreach ($this->getManyToManyTables() as $tables):
+		$dataName = $this->getListName($tables); 
+?>
+    if ($this->getView()->hasData('<?php echo $dataName; ?>'))
     {
       $values = array();
       foreach ($this->object->get<?php echo $tables['middleTable']->getPhpName() ?>s() as $obj)
@@ -132,19 +136,21 @@ endforeach;
         $values[] = $obj->get<?php echo $tables['relatedColumn']->getPhpName() ?>();
       }
 
-      $this->setDefault('<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list', $values);
+      $this-><?php echo $dataName ?>->bind($values);
     }
 
 <?php endforeach; ?>
   }
 
-  protected function doSave($con = null)
+  protected function saveObject($con)
   {
-    parent::doSave($con);
+    $object = parent::saveObject($con);
 
 <?php foreach ($this->getManyToManyTables() as $tables): ?>
     $this->save<?php echo $tables['middleTable']->getPhpName() ?>List($con);
 <?php endforeach; ?>
+    
+    return $object;
   }
 
 <?php foreach ($this->getManyToManyTables() as $tables): ?>
@@ -155,7 +161,7 @@ endforeach;
       throw $this->getErrorSchema();
     }
 
-    if (!isset($this->widgetSchema['<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list']))
+    if (!$this->getView()->hasData('<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list'))
     {
       // somebody has unset this widget
       return;
@@ -170,7 +176,7 @@ endforeach;
     $c->add(<?php echo constant($tables['middleTable']->getClassname().'::PEER') ?>::<?php echo strtoupper($tables['column']->getName()) ?>, $this->object->getPrimaryKey());
     <?php echo constant($tables['middleTable']->getClassname().'::PEER') ?>::doDelete($c, $con);
 
-    $values = $this->getValue('<?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list');
+    $values = $this-><?php echo $this->underscore($tables['middleTable']->getClassname()) ?>_list->getValue();
     if (is_array($values))
     {
       foreach ($values as $value)

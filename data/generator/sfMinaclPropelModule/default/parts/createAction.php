@@ -5,7 +5,7 @@
     $this->forward404Unless($request->isMethod(sfRequest::POST));
 
 <?php endif; ?>
-    $this->form = new <?php echo $this->getModelClass().'Form' ?>();
+    $this->form = new <?php echo $this->getModelClass().'Form' ?>('<?php echo $this->getSingularName() ?>', '<?php echo $this->getFormTemplate() ?>');
 
     $this->processForm($request, $this->form);
 

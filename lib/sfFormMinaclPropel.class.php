@@ -41,7 +41,7 @@ abstract class sfFormMinaclPropel extends sfFormMinacl
 	 *
 	 * @return Connection A database connection
 	 */
-	public function getConnection()
+	protected function getConnection()
 	{
 		return Propel::getConnection(constant(sprintf('%s::DATABASE_NAME', get_class($this->object->getPeer()))));
 	}
@@ -76,15 +76,27 @@ abstract class sfFormMinaclPropel extends sfFormMinacl
 	protected function doUpdateObject($values)
 	{
 		$this->getObject()->fromArray($values, BasePeer::TYPE_FIELDNAME);
+		/*
+		 * if the object is new and has an auto-incrementing id, we'll have to
+		 * set the ID back to null (it'll have been set to an empty string)
+		 */
+		if($this->getObject()->isNew())
+		{
+			$tableMap = call_user_func(array(constant($this->getModelName() . '::PEER'), 'getTableMap'));
+			if($tableMap->isUseIdGenerator())
+			{
+				$this->getObject()->setPrimaryKey(null);
+			}
+		}
 	}
 	
 	/**
 	 * (non-PHPdoc)
 	 * @see lib/sfFormMinacl::saveObject()
 	 */
-	protected function saveObject()
+	protected function saveObject($con)
 	{
-		$this->getObject()->save();
+		$this->getObject()->save($con);
 		
 		return $this->getObject();
 	}
