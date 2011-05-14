@@ -50,18 +50,20 @@ foreach ($this->table->getColumns() as $column):
 		/*
 		 * Validators for the <?php echo $column->getName() ?> column
 		 */
+		if($this->getView()->hasData('<?php echo $this->translateColumnName($column) ?>'))
+		{
 <?php 
 	foreach($validators as $num => $val):
 		$valName = '$' . $this->translateColumnName($column) . ($num + 1);
 ?>
-		<?php echo $valName ?> = new <?php echo $val['class'] ?>(<?php echo isset($val['arguments']) ? $val['arguments'] : '' ?>);
+			<?php echo $valName ?> = new <?php echo $val['class'] ?>(<?php echo isset($val['arguments']) ? $val['arguments'] : '' ?>);
 <?php
 		/*
 		 * if the validator has an option chain, output it here
 		 */ 
 		if(isset($val['chain'])): 
 ?>
-		<?php echo $valName . $val['chain'] ?>;
+			<?php echo $valName . $val['chain'] ?>;
 <?php
 		endif;
 	endforeach;
@@ -71,22 +73,25 @@ foreach ($this->table->getColumns() as $column):
 	 */
 	if(sizeof($validators) > 1):
 ?>
-		$this-><?php echo $this->translateColumnName($column) ?>->setValidator(new phValidatorLogic(<?php echo '$' . $this->translateColumnName($column) . '1' ?>))->
+			$this-><?php echo $this->translateColumnName($column) ?>->setValidator(new phValidatorLogic(<?php echo '$' . $this->translateColumnName($column) . '1' ?>))->
 <?php 
 		for($x=1; $x<sizeof($validators); $x++):
 			$val = $validators[$x];
 			$valName = '$' . $this->translateColumnName($column) . ($x +1);
 ?>
-			and_(<?php echo $valName ?>)<?php echo ($x+1) < sizeof($validators) ? '->' : ';' ?>
+				and_(<?php echo $valName ?>)<?php echo ($x+1) < sizeof($validators) ? '->' : ';' ?>
 		
 <?php 
 		endfor;
 	else:
-		$valName = '$' . $this->translateColumnName($column) . '1';
+			$valName = '$' . $this->translateColumnName($column) . '1';
 ?>
-		$this-><?php echo $this->translateColumnName($column) ?>->setValidator(<?php echo $valName ?>);
+			$this-><?php echo $this->translateColumnName($column) ?>->setValidator(<?php echo $valName ?>);
 <?php
 	endif;
+?>
+		}
+<?php 
 endforeach;
 foreach ($this->getManyToManyTables() as $tables):
 	$dataName = $this->underscore($tables['middleTable']->getClassname()) . '_list';
@@ -94,9 +99,12 @@ foreach ($this->getManyToManyTables() as $tables):
 		/*
 		 * Validators for the <?php echo $tables['middleTable']->getClassname() ?> many 2 many table
 		 */
-		$<?php echo $dataName ?> = new sfMinaclPropelChoiceValidator('<?php echo $tables['relatedTable']->getClassname() ?>');
-		$<?php echo $dataName ?>->setMultiple(true);
-		$this-><?php echo $dataName ?>->setValidator($<?php echo $dataName ?>);
+		if($this->getView()->hasData('<?php echo $dataName ?>'))
+		{
+			$<?php echo $dataName ?> = new sfMinaclPropelChoiceValidator('<?php echo $tables['relatedTable']->getClassname() ?>');
+			$<?php echo $dataName ?>->setMultiple(true);
+			$this-><?php echo $dataName ?>->setValidator($<?php echo $dataName ?>);
+		}
 <?php 
 endforeach;
 ?>
