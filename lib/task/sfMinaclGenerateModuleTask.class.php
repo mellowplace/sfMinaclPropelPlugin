@@ -39,6 +39,8 @@ class sfMinaclGenerateModuleTask extends sfPropelGenerateModuleTask
 
 		$this->namespace = 'minacl';
 		$this->name = 'generate-module';
+		$this->aliases = array();
+		
 		$this->briefDescription = 'Generates a Propel module (that is compatible with Minacl)';
 
 		$this->detailedDescription = <<<EOF
