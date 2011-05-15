@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
-    http://pear.php.net/dtd/tasks-1.0.xsd
-    http://pear.php.net/dtd/package-2.0
-    http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
  <name>sfMinaclPropelPlugin</name>
  <channel>plugins.symfony-project.org</channel>
  <summary>Provides Propel support for Minacl</summary>
@@ -14,7 +11,7 @@
   <active>yes</active>
  </lead>
  <date>2011-05-15</date>
- <time>13:20:15</time>
+ <time>15:48:04</time>
  <version>
   <release>0.1.1</release>
   <api>0.1.1</api>
@@ -54,7 +51,7 @@ Uses sfMinaclPlugin 0.1.x
    <file baseinstalldir="sfMinaclPropelPlugin" md5sum="cf139534d631fb522217ccb58ba7c2a8" name="lib/generator/sfMinaclPropelFormGenerator.php" role="php" />
    <file baseinstalldir="sfMinaclPropelPlugin" md5sum="97d46ad5f0d177b06d265b258c4e2e7b" name="lib/generator/sfMinaclPropelGenerator.class.php" role="php" />
    <file baseinstalldir="sfMinaclPropelPlugin" md5sum="b2108185ff5aea9189fb939a692f8169" name="lib/task/sfMinaclBuildFormsTask.class.php" role="php" />
-   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="100c60e7aa687fc529b916085524d8f1" name="lib/task/sfMinaclGenerateModuleTask.class.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="c8d14e1fb45d2114d634f05dc7988c55" name="lib/task/sfMinaclGenerateModuleTask.class.php" role="php" />
    <file baseinstalldir="sfMinaclPropelPlugin" md5sum="1c3e73e99257dea4872fee0ce72aa9ee" name="lib/validator/sfMinaclPropelChoiceValidator.class.php" role="php" />
    <file baseinstalldir="sfMinaclPropelPlugin" md5sum="7fd7f4e8ca5c7a124f3ac187cbced414" name="lib/widget/sfMinaclPropelChooser.class.php" role="php" />
    <file baseinstalldir="sfMinaclPropelPlugin" md5sum="6ad01afb82f19f258263756f65abaf7b" name="lib/widget/view/propelMultiSelect.php" role="php" />
@@ -81,9 +78,9 @@ Uses sfMinaclPlugin 0.1.x
    <package>
     <name>symfony</name>
     <channel>pear.symfony-project.com</channel>
-    <min>1.4.0</min>
-    <max>1.5.0</max>
-    <exclude>1.5.0</exclude>
+    <min>1.3.0</min>
+    <max>1.4.0</max>
+    <exclude>1.4.0</exclude>
    </package>
   </required>
  </dependencies>
@@ -98,11 +95,10 @@ Uses sfMinaclPlugin 0.1.x
     <release>alpha</release>
     <api>alpha</api>
    </stability>
-   <date>2011-05-14</date>
+   <date>2011-05-15</date>
    <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
    <notes>
-Uses sfMinaclPlugin 0.1.0
-Fixed bad symfony dependency in package.xml
+Uses sfMinaclPlugin 0.1.x
    </notes>
   </release>
  </changelog>
