@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.2" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>sfMinaclPropelPlugin</name>
+ <channel>plugins.symfony-project.org</channel>
+ <summary>Provides Propel support for Minacl</summary>
+ <description>Provides 2 build tasks for creating forms and generating modules that work with Propel</description>
+ <lead>
+  <name>Rob Graham</name>
+  <user>mellowplace</user>
+  <email>html-forms@mellowplace.com</email>
+  <active>yes</active>
+ </lead>
+ <date>2011-05-15</date>
+ <time>13:20:15</time>
+ <version>
+  <release>0.1.1</release>
+  <api>0.1.1</api>
+ </version>
+ <stability>
+  <release>alpha</release>
+  <api>alpha</api>
+ </stability>
+ <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+ <notes>
+Uses sfMinaclPlugin 0.1.x
+ </notes>
+ <contents>
+  <dir baseinstalldir="sfMinaclPropelPlugin" name="/">
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="c051f323c3c7682804cb3e8689e66ce2" name="config/config.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="674acc1777970f2970ac8417946945c9" name="data/generator/sfMinaclPropelForm/default/template/sfMinaclPropelFormBase.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="ad4c92ebeb229a467c83b93ea720a452" name="data/generator/sfMinaclPropelForm/default/template/sfMinaclPropelFormGeneratedTemplate.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="dc632be9880c11e606b7c6e231008c7b" name="data/generator/sfMinaclPropelForm/default/template/sfMinaclPropelFormTemplate.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="bf09453f84a1661d2703066b8d0592c0" name="data/generator/sfMinaclPropelForm/default/template/sfMinaclPropelFormViewTemplate.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="0839097667d2943afa1a8dbe24668c5d" name="data/generator/sfMinaclPropelModule/default/parts/createAction.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="cf29373d3bf175a33838701cfd7ff5b5" name="data/generator/sfMinaclPropelModule/default/parts/deleteAction.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="2ff9fc9ba66949cc87eba9d0c8b1ded0" name="data/generator/sfMinaclPropelModule/default/parts/editAction.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="50d198eee89970da84713d5c5bf0071f" name="data/generator/sfMinaclPropelModule/default/parts/indexAction.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="debf3acf071a94ff47cbd21352901d38" name="data/generator/sfMinaclPropelModule/default/parts/newAction.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="e9110964e348e38be53466ff19bf0784" name="data/generator/sfMinaclPropelModule/default/parts/processFormAction.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="de087742b7b63c19451ab833348a1c14" name="data/generator/sfMinaclPropelModule/default/parts/showAction.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="51a4efd466851cdb6d1793f85e95da2f" name="data/generator/sfMinaclPropelModule/default/parts/updateAction.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="12327e655f357c26424f79d3372820e0" name="data/generator/sfMinaclPropelModule/default/skeleton/actions/actions.class.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="b722a14a2c25ec3e3d76870dd95db2df" name="data/generator/sfMinaclPropelModule/default/skeleton/config/generator.yml" role="data" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="77568d079f0198a6bb98b09ef7dbc7e5" name="data/generator/sfMinaclPropelModule/default/template/actions/actions.class.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="d6144b7eaf7cd459bb9cac4c14ec76ed" name="data/generator/sfMinaclPropelModule/default/template/templates/editSuccess.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="ee36fc42a8ada9455827c3e1c85eaa23" name="data/generator/sfMinaclPropelModule/default/template/templates/indexSuccess.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="22f7659c6a6138649be15ea7c026b0a6" name="data/generator/sfMinaclPropelModule/default/template/templates/newSuccess.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="4df9cd33fbd56664e287cb0e0ba3cec8" name="data/generator/sfMinaclPropelModule/default/template/templates/showSuccess.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="b328cb116c60c1cb49f1578e0bfa6a93" name="data/generator/sfMinaclPropelModule/default/template/templates/_form.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="bfd5f8ccd90aff436a2296a2e4059bb7" name="lib/sfFormMinaclPropel.class.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="cf139534d631fb522217ccb58ba7c2a8" name="lib/generator/sfMinaclPropelFormGenerator.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="97d46ad5f0d177b06d265b258c4e2e7b" name="lib/generator/sfMinaclPropelGenerator.class.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="b2108185ff5aea9189fb939a692f8169" name="lib/task/sfMinaclBuildFormsTask.class.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="100c60e7aa687fc529b916085524d8f1" name="lib/task/sfMinaclGenerateModuleTask.class.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="1c3e73e99257dea4872fee0ce72aa9ee" name="lib/validator/sfMinaclPropelChoiceValidator.class.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="7fd7f4e8ca5c7a124f3ac187cbced414" name="lib/widget/sfMinaclPropelChooser.class.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="6ad01afb82f19f258263756f65abaf7b" name="lib/widget/view/propelMultiSelect.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="53f4c76ba01468db1bb1351221872138" name="lib/widget/view/propelSingleSelect.php" role="php" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="e6a600fd5e1d9cbde2d983680233ad02" name="LICENSE" role="data" />
+   <file baseinstalldir="sfMinaclPropelPlugin" md5sum="3a3ec32eef566a3a158fda2436c9fe45" name="README" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0</min>
+   </pearinstaller>
+   <package>
+    <name>sfMinaclPlugin</name>
+    <channel>plugins.symfony-project.org</channel>
+    <min>0.1.0</min>
+    <max>0.2.0</max>
+    <exclude>0.2.0</exclude>
+   </package>
+   <package>
+    <name>symfony</name>
+    <channel>pear.symfony-project.com</channel>
+    <min>1.4.0</min>
+    <max>1.5.0</max>
+    <exclude>1.5.0</exclude>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>0.1.1</release>
+    <api>0.1.1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2011-05-14</date>
+   <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+   <notes>
+Uses sfMinaclPlugin 0.1.0
+Fixed bad symfony dependency in package.xml
+   </notes>
+  </release>
+ </changelog>
+</package>
